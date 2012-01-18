@@ -28,22 +28,27 @@ void bounce::setup()
 	grayThresh.allocate(kinect.width, kinect.height);
 	grayThreshFar.allocate(kinect.width, kinect.height);
 	
-	// Set thresholds
+    
+	// Set defaults
 	nearThreshold = 50;
 	farThreshold  = 180;
+    gravity = ofPoint(0, 10);
+    doAutoBall = false;
+    doBallAtMouse = true;
+    doKillBalls = false;
+    triangulateSampleSize = 15;
+    ballDensity = .1;
+    ballBounce = .1;
+    ballFriction = .9;
+    polyOffset = ofPoint(0,0);
 	
 	
 	// Setup Box2d stuff
 	box2d.init();
-	box2d.setGravity(0, 10);
     box2d.createGround();
 	box2d.checkBounds(true);
 	box2d.setFPS(30.0);
     
-    doAutoBall = false;
-    doBallAtMouse = true;
-    
-    triangulateSampleSize = 15;
     
 	// Listeners
 	ofAddListener(ofEvents.mouseMoved, this, &bounce::mouseMoved);
@@ -54,12 +59,15 @@ void bounce::setup()
 	ofSetLogLevel(OF_LOG_VERBOSE);
 	ofSetVerticalSync(true);
     ofBackgroundHex(0xffffff);
-    ofEnableSmoothing();
+    //ofEnableSmoothing();
     
+    // gui setup
     gui.setFolderName("kinectBalls/");
     gui.setup();
     gui.setDefaultKeys(true);
     setupGUI();
+    gui.loadFromXML();
+    
 }
 
 //--------------------------------------------------------------
@@ -70,31 +78,33 @@ void bounce::setupGUI(string name)
     
 	ofxSimpleGuiPage& page = gui.addPage("kinect");
     gui.addSlider("angle", kinectAngle, -27, 27);
+	// images and cv
+    gui.addTitle("cv");
 	gui.addSlider("near threshold", nearThreshold, 0, 255);
 	gui.addSlider("far threshold", farThreshold, 0, 255);
-    
+    gui.addSlider("grey blur", greyImageBlur, 0, 40);
+    gui.addSlider("grey threshold", greyImageThreshold, 0, 255);
+	gui.addContent("grey", grayImage);
     gui.addSlider("min blob", minBlobSize, 0, 200);
-    gui.addSlider2d("poly offset", polyOffset, 0, 500, 0, 500);
-    gui.addSlider("poly tri sample", triangulateSampleSize, 1, 20);
+	gui.addContent("contour", contourFinder);
+	//gui.addContent("kinect", kinect);
+	gui.addContent("live", liveImg);
     
+    
+    gui.addPage("box2d");
+    gui.addSlider2d("gravity", gravity, -10, 10, -10, 10);
+    // poly
+    gui.addTitle("poly");
+    gui.addSlider2d("poly offset", polyOffset, 0, 500, 0, 500);
+    gui.addSlider("poly sample size", triangulateSampleSize, 1, 20);
     // balls
     gui.addToggle("auto ball", doAutoBall);
     gui.addToggle("ball at mouse", doBallAtMouse);
-    
-	
-	// Draw Depth, live kinect camera, greyscale and countour images captured from kinect
-    gui.addTitle("images").newColumn = true;
-    gui.addSlider("grey blur", greyImageBlur, 0, 40);
-    gui.addSlider("grey threshold", greyImageThreshold, 0, 255);
-	gui.addContent("grey", grayImage, 256);
-	gui.addContent("contour", contourFinder, 256);
-	//gui.addContent("kinect", kinect, 256);
-	gui.addContent("live", liveImg, 256);
-	
-    
-	// Uncomment if post load actions are required
-	page.loadFromXML();
-	// do post load actions here
+    gui.addSlider("ball frame mod", ballFrameMod, 1, 60);
+    gui.addButton("kill balls", doKillBalls);
+    gui.addSlider("ball density", ballDensity, 0, 2);
+    gui.addSlider("ball bounce", ballBounce, 0, 2);
+    gui.addSlider("ball friction", ballFriction, 0, 1);
     
 }
 
@@ -103,6 +113,8 @@ void bounce::update()
 {
     
     if(kinectAngle != kinect.getCurrentCameraTiltAngle()) kinect.setCameraTiltAngle(kinectAngle);
+    
+    if(box2d.gravity != gravity) box2d.setGravity(gravity);
     
 	// Update GUI buttons
 	updateButtons();
@@ -137,7 +149,6 @@ void bounce::update()
     
 	if (ofGetFrameNum() % 2 == 0) {
         
-        
         // find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
         // also, find holes is set to false so we will not get interior contours
         contourFinder.findContours(grayImage, 10, (kinect.width*kinect.height)/2, minBlobSize, true);
@@ -157,60 +168,48 @@ void bounce::update()
             poly.create(box2d.getWorld());
         }
         
-        if(doAutoBall){
-            float x, y;
-            if (doBallAtMouse) {
-                x = mouseX;
-                y = mouseY;
-            } else {
-                x = ofRandom(0, ofGetWidth());
-                y = -10;
-            }
-            float r2 = ofRandom(5, 12);
-            CustomParticle p;
-            p.setPhysics(0.1, 0.1, 0.9);
-            p.setup(box2d.getWorld(), x, y, r2);
-            p.color.r = ofRandom(20, 255);
-            p.color.g = ofRandom(20, 255);
-            p.color.b = ofRandom(20, 255);
-            customParticles.push_back(p);
-        }
-        
+    }
+    
+    if (doAutoBall && ofGetFrameNum() % ballFrameMod == 0) {
+        addBall();
     }
     
 	
 }
 
 
-void bounce::updateButtons()
-{
+void bounce::updateButtons(){
+    if (doKillBalls) {
+        doKillBalls = false;
+        for(int i=0; i<customParticles.size(); i++){
+            customParticles[i].destroy();
+        }
+        customParticles.clear();
+    }
 }
 
 
-void bounce::draw()
-{
+void bounce::draw(){
 	
 	// Draw the live/camera image
 	//liveImg.draw(0, 0, ofGetWidth(), ofGetHeight());
 	
 	
 	// Draw Box2d stuff
-	// Draw the custom particles
-	for(int i=0; i<customParticles.size(); i++)
-	{
+    // balls
+	for(int i=0; i<customParticles.size(); i++){
 		customParticles[i].draw();
 	}
-    ofFill();
+    // polys
     ofSetHexColor(0x666666);
+    ofFill();
     poly.draw();
     ofNoFill();
-    
 	// Draw box2d
 	box2d.draw();
     
 	
-	// Debug info
-    
+	// debug
 	string info = "";
 	info += "Total Bodies: "+ofToString(box2d.getBodyCount())+"\n";
 	//info += "FPS: "+ofToString(ofGetFrameRate())+"\n";
@@ -221,6 +220,24 @@ void bounce::draw()
     gui.draw();
 }
 
+void bounce::addBall(){
+    float x, y;
+    if (doBallAtMouse) {
+        x = mouseX;
+        y = mouseY;
+    } else {
+        x = ofRandom(0, ofGetWidth());
+        y = -10;
+    }
+    float r2 = ofRandom(5, 12);
+    CustomParticle p;
+    p.setPhysics(ballDensity, ballBounce, ballFriction);
+    p.setup(box2d.getWorld(), x, y, r2);
+    p.color.r = ofRandom(20, 255);
+    p.color.g = ofRandom(20, 255);
+    p.color.b = ofRandom(20, 255);
+    customParticles.push_back(p);
+}
 
 
 void bounce::exit(){
@@ -238,51 +255,25 @@ void bounce::keyPressed (ofKeyEventArgs& e)
 			break;
 			
 		case 'b' :
-			//ofLog(OF_LOG_VERBOSE, "DRAW PARTICLE");
-            float x, y;
-            if (doBallAtMouse) {
-                x = mouseX;
-                y = mouseY;
-            } else {
-                x = ofRandom(0, ofGetWidth());
-                y = -10;
-            }
-			float r2 = ofRandom(5, 12);
-			CustomParticle p;
-			p.setPhysics(0.1, 0.1, 0.9);
-			p.setup(box2d.getWorld(), x, y, r2);
-			p.color.r = ofRandom(20, 255);
-			p.color.g = ofRandom(20, 255);
-			p.color.b = ofRandom(20, 255);
-			customParticles.push_back(p);
+            addBall();
 			break;
 			
 	}
 }
 
-//--------------------------------------------------------------
-void bounce::mouseMoved(ofMouseEventArgs& e)
-{
-	//ofLog(OF_LOG_VERBOSE, ofToString(e.x, 1));
+
+void bounce::mouseMoved(ofMouseEventArgs& e){
 	mouseX = e.x;
 	mouseY = e.y;
 }
 
-//--------------------------------------------------------------
-void bounce::mouseDragged(int x, int y, int button)
-{}
+void bounce::mouseDragged(int x, int y, int button){}
 
-//--------------------------------------------------------------
-void bounce::mousePressed(int x, int y, int button)
-{}
+void bounce::mousePressed(int x, int y, int button){}
 
-//--------------------------------------------------------------
-void bounce::mouseReleased(int x, int y, int button)
-{}
+void bounce::mouseReleased(int x, int y, int button){}
 
-//--------------------------------------------------------------
-void bounce::windowResized(int w, int h)
-{}
+void bounce::windowResized(int w, int h){}
 
 
 

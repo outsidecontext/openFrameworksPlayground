@@ -14,7 +14,7 @@
 #include "ofxKinect.h"
 #include "ofxBox2d.h"
 
-// ------------------------------------------------- a simple extended box2d circle
+
 class CustomParticle : public ofxBox2dCircle {
 	
 public:
@@ -36,15 +36,9 @@ public:
 	}
 };
 
-// -------------------------------------------------
 
-class bounce : public ofBaseApp
-{
-	
+class bounce : public ofBaseApp {
 public:
-	
-	
-	
 	// Methods //
 	
 	// Base methods
@@ -65,6 +59,8 @@ public:
 	void setupGUI(string name="");
 	void updateButtons();
 	
+    // more
+    void addBall();
 	
 	
 	// Fields //
@@ -73,20 +69,17 @@ public:
 	float mouseX;
 	float mouseY;
 	
-	// The kinect object
+	// kinect
 	ofxKinect kinect;
     float kinectAngle;
 	
-	// Open CV images for tracking depth and storing a clean plate
+	// Open CV
 	ofxCvColorImage	colorImg;
 	ofxCvColorImage	liveImg;
 	ofxCvGrayscaleImage grayImage;
 	ofxCvGrayscaleImage grayThresh;
 	ofxCvGrayscaleImage grayThreshFar;
     int minBlobSize;
-	
-	
-	// For Contour analysis
 	ofxCvContourFinder contourFinder;
 	
 	// For threshold analysis
@@ -95,6 +88,7 @@ public:
 	int farThreshold;
     int greyImageBlur, greyImageThreshold;
 	
+    
 	// Box2d
 	ofxBox2d box2d;
 	vector<ofxBox2dCircle> circles;
@@ -106,7 +100,10 @@ public:
 	ofxBox2dPolygon poly;
     int triangulateSampleSize;
     
-    bool doAutoBall, doBallAtMouse;
+    bool doAutoBall, doBallAtMouse, doKillBalls;
+    ofPoint gravity;
+    float ballDensity, ballBounce, ballFriction;
+    int ballFrameMod;
 	
 	
 };

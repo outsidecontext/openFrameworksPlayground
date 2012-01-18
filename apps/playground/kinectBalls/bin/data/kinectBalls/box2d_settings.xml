@@ -1,0 +1,44 @@
+<controls>
+    <Slider2D_gravity>
+        <name>gravity</name>
+        <valueX>0.000000</valueX>
+        <valueY>10.000000</valueY>
+    </Slider2D_gravity>
+    <Slider2D_poly_offset>
+        <name>poly offset</name>
+        <valueX>0.000000</valueX>
+        <valueY>290.760864</valueY>
+    </Slider2D_poly_offset>
+    <SliderInt_poly_sample_size>
+        <name>poly sample size</name>
+        <value>15</value>
+    </SliderInt_poly_sample_size>
+    <Toggle_auto_ball>
+        <name>auto ball</name>
+        <value>1</value>
+    </Toggle_auto_ball>
+    <Toggle_ball_at_mouse>
+        <name>ball at mouse</name>
+        <value>1</value>
+    </Toggle_ball_at_mouse>
+    <SliderInt_ball_frame_mod>
+        <name>ball frame mod</name>
+        <value>5</value>
+    </SliderInt_ball_frame_mod>
+    <Button_kill_balls>
+        <name>kill balls</name>
+        <value>0</value>
+    </Button_kill_balls>
+    <SliderFloat_ball_density>
+        <name>ball density</name>
+        <value>0.100000</value>
+    </SliderFloat_ball_density>
+    <SliderFloat_ball_bounce>
+        <name>ball bounce</name>
+        <value>0.640000</value>
+    </SliderFloat_ball_bounce>
+    <SliderFloat_ball_friction>
+        <name>ball friction</name>
+        <value>0.900000</value>
+    </SliderFloat_ball_friction>
+</controls>
