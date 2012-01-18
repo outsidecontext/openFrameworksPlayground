@@ -1,0 +1,43 @@
+<controls>
+    <SliderFloat_angle>
+        <name>angle</name>
+        <value>9.990002</value>
+    </SliderFloat_angle>
+    <SliderInt_near_threshold>
+        <name>near threshold</name>
+        <value>113</value>
+    </SliderInt_near_threshold>
+    <SliderInt_far_threshold>
+        <name>far threshold</name>
+        <value>255</value>
+    </SliderInt_far_threshold>
+    <SliderInt_min_blob>
+        <name>min blob</name>
+        <value>167</value>
+    </SliderInt_min_blob>
+    <Slider2D_poly_offset>
+        <name>poly offset</name>
+        <valueX>0.000000</valueX>
+        <valueY>285.326080</valueY>
+    </Slider2D_poly_offset>
+    <SliderInt_poly_tri_sample>
+        <name>poly tri sample</name>
+        <value>15</value>
+    </SliderInt_poly_tri_sample>
+    <Toggle_auto_ball>
+        <name>auto ball</name>
+        <value>0</value>
+    </Toggle_auto_ball>
+    <Toggle_ball_at_mouse>
+        <name>ball at mouse</name>
+        <value>1</value>
+    </Toggle_ball_at_mouse>
+    <SliderInt_grey_blur>
+        <name>grey blur</name>
+        <value>19</value>
+    </SliderInt_grey_blur>
+    <SliderInt_grey_threshold>
+        <name>grey threshold</name>
+        <value>123</value>
+    </SliderInt_grey_threshold>
+</controls>
