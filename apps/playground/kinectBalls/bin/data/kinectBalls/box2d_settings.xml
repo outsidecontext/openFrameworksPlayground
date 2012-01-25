@@ -4,41 +4,73 @@
         <valueX>0.000000</valueX>
         <valueY>10.000000</valueY>
     </Slider2D_gravity>
+    <Toggle_draw_polys>
+        <name>draw polys</name>
+        <value>1</value>
+    </Toggle_draw_polys>
     <Slider2D_poly_offset>
         <name>poly offset</name>
         <valueX>0.000000</valueX>
-        <valueY>290.760864</valueY>
+        <valueY>-200.000000</valueY>
     </Slider2D_poly_offset>
     <SliderInt_poly_sample_size>
         <name>poly sample size</name>
         <value>15</value>
     </SliderInt_poly_sample_size>
+    <Button_kill_balls>
+        <name>kill balls</name>
+        <value>0</value>
+    </Button_kill_balls>
     <Toggle_auto_ball>
         <name>auto ball</name>
         <value>1</value>
     </Toggle_auto_ball>
     <Toggle_ball_at_mouse>
         <name>ball at mouse</name>
-        <value>1</value>
+        <value>0</value>
     </Toggle_ball_at_mouse>
     <SliderInt_ball_frame_mod>
         <name>ball frame mod</name>
-        <value>5</value>
+        <value>15</value>
     </SliderInt_ball_frame_mod>
-    <Button_kill_balls>
-        <name>kill balls</name>
-        <value>0</value>
-    </Button_kill_balls>
     <SliderFloat_ball_density>
         <name>ball density</name>
-        <value>0.100000</value>
+        <value>1.000000</value>
     </SliderFloat_ball_density>
     <SliderFloat_ball_bounce>
         <name>ball bounce</name>
-        <value>0.640000</value>
+        <value>0.400000</value>
     </SliderFloat_ball_bounce>
     <SliderFloat_ball_friction>
         <name>ball friction</name>
-        <value>0.900000</value>
+        <value>0.800000</value>
     </SliderFloat_ball_friction>
+    <SliderFloat_ball_rad_min>
+        <name>ball rad min</name>
+        <value>15.000000</value>
+    </SliderFloat_ball_rad_min>
+    <SliderFloat_ball_rad_max>
+        <name>ball rad max</name>
+        <value>35.000000</value>
+    </SliderFloat_ball_rad_max>
+    <SliderInt_ball_life_min>
+        <name>ball life min</name>
+        <value>20</value>
+    </SliderInt_ball_life_min>
+    <SliderInt_ball_life_max>
+        <name>ball life max</name>
+        <value>40</value>
+    </SliderInt_ball_life_max>
+    <Toggle_draw_colours>
+        <name>draw colours</name>
+        <value>0</value>
+    </Toggle_draw_colours>
+    <Toggle_draw_images>
+        <name>draw images</name>
+        <value>1</value>
+    </Toggle_draw_images>
+    <Toggle_draw_circles>
+        <name>draw circles</name>
+        <value>0</value>
+    </Toggle_draw_circles>
 </controls>

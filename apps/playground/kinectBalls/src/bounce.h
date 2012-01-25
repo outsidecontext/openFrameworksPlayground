@@ -13,23 +13,57 @@
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "ofxBox2d.h"
+#include "ImageList.h"
+
+
+#define APP_WIDTH 1280
+#define APP_HEIGHT 720
 
 
 class CustomParticle : public ofxBox2dCircle {
 	
 public:
+    
+    bool doColour, doDrawImage, doCircle;
+    ofColor color;
+    ofImage* image;
+    int life, maxLife;
+    
 	CustomParticle() {
+        image = NULL;
+        doColour = true;
+        doDrawImage = true;
+        doCircle = false;
+        life = 0;
+        maxLife = 240;
 	}
-	ofColor color;
+    
+    void update() {
+        life++;
+    }
+    
 	void draw() {
+        
 		float radius = getRadius();
 		
 		glPushMatrix();
 		glTranslatef(getPosition().x, getPosition().y, 0);
+        glRotatef(getRotation(), 0, 0, 1);
 		
-		ofSetColor(color.r, color.g, color.b);
-		ofFill();
-		ofCircle(0, 0, radius);	
+        if (doColour) {
+            ofSetColor(color.r, color.g, color.b);
+        }
+		
+        if (doCircle) {
+            ofFill();
+            ofCircle(0, 0, radius);
+        }
+        
+        if (doDrawImage &&  image != NULL) {
+            image->draw(-radius, -radius, radius*2, radius*2);
+        }
+        
+        //ofDrawBitmapString(ofToString(life), 0, 0);
 		
 		glPopMatrix();
 		
@@ -39,6 +73,7 @@ public:
 
 class bounce : public ofBaseApp {
 public:
+    
 	// Methods //
 	
 	// Base methods
@@ -59,11 +94,17 @@ public:
 	void setupGUI(string name="");
 	void updateButtons();
 	
-    // more
+    
+    
+    
+private:
+    
+    
+    // Methods //
     void addBall();
-	
-	
-	// Fields //
+    
+    
+    // Fields //
 	
 	// Mouse point
 	float mouseX;
@@ -96,14 +137,18 @@ public:
 	vector<ofxBox2dRect> boxes;
 	vector<CustomParticle> customParticles;
 	
+    ofPoint gravity;
     ofPoint polyOffset;
 	ofxBox2dPolygon poly;
-    int triangulateSampleSize;
+    int triangulateSampleSize, ballFrameMod, ballLifeMin, ballLifeMax;
+    bool doAutoBall, doBallAtMouse, doKillBalls, isBounds;
+    bool doColour, doDrawImage, doCircle, doDrawPolys;
+    float ballDensity, ballBounce, ballFriction, minBallRad, maxBallRad;
     
-    bool doAutoBall, doBallAtMouse, doKillBalls;
-    ofPoint gravity;
-    float ballDensity, ballBounce, ballFriction;
-    int ballFrameMod;
+    //
+    // images
+    ImageList images;
+    ofImage bg;
 	
 	
 };

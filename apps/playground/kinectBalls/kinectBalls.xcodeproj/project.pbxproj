@@ -24,6 +24,7 @@
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		E85B059414D0029F00590CED /* ImageList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E85B059214D0029F00590CED /* ImageList.cpp */; };
 		F5EF6BC814C6D5AB00813136 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = F5EF6B6F14C6D5AB00813136 /* cameras.c */; };
 		F5EF6BC914C6D5AB00813136 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = F5EF6B7214C6D5AB00813136 /* core.c */; };
 		F5EF6BCA14C6D5AB00813136 /* freenect.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = F5EF6B7814C6D5AB00813136 /* freenect.lib */; };
@@ -157,6 +158,8 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E85B059214D0029F00590CED /* ImageList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageList.cpp; sourceTree = "<group>"; };
+		E85B059314D0029F00590CED /* ImageList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageList.h; sourceTree = "<group>"; };
 		F5EF6B6E14C6D5AB00813136 /* APACHE20 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = APACHE20; sourceTree = "<group>"; };
 		F5EF6B6F14C6D5AB00813136 /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cameras.c; sourceTree = "<group>"; };
 		F5EF6B7014C6D5AB00813136 /* cameras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cameras.h; sourceTree = "<group>"; };
@@ -467,6 +470,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				E85B058F14D0027B00590CED /* allofus */,
 				F5EF6D1014C6D7F500813136 /* msa */,
 				F5EF6C6D14C6D78400813136 /* ofxBox2d */,
 				F5EF6BD314C6D5B200813136 /* ofxOpenCv */,
@@ -552,6 +556,24 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		E85B058F14D0027B00590CED /* allofus */ = {
+			isa = PBXGroup;
+			children = (
+				E85B059114D0029F00590CED /* image */,
+			);
+			name = allofus;
+			sourceTree = "<group>";
+		};
+		E85B059114D0029F00590CED /* image */ = {
+			isa = PBXGroup;
+			children = (
+				E85B059214D0029F00590CED /* ImageList.cpp */,
+				E85B059314D0029F00590CED /* ImageList.h */,
+			);
+			name = image;
+			path = ../../../addonsAllofUs/image;
 			sourceTree = "<group>";
 		};
 		F5EF6B5114C6D5AB00813136 /* ofxKinect */ = {
@@ -1555,6 +1577,7 @@
 				F5EF6DEC14C6E18100813136 /* tinyxmlerror.cpp in Sources */,
 				F5EF6DED14C6E18100813136 /* tinyxmlparser.cpp in Sources */,
 				F5EF6DEE14C6E18100813136 /* ofxXmlSettings.cpp in Sources */,
+				E85B059414D0029F00590CED /* ImageList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
