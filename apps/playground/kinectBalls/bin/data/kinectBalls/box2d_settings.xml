@@ -39,7 +39,7 @@
     </SliderFloat_ball_density>
     <SliderFloat_ball_bounce>
         <name>ball bounce</name>
-        <value>0.400000</value>
+        <value>0.820000</value>
     </SliderFloat_ball_bounce>
     <SliderFloat_ball_friction>
         <name>ball friction</name>
@@ -47,11 +47,11 @@
     </SliderFloat_ball_friction>
     <SliderFloat_ball_rad_min>
         <name>ball rad min</name>
-        <value>15.000000</value>
+        <value>5.655000</value>
     </SliderFloat_ball_rad_min>
     <SliderFloat_ball_rad_max>
         <name>ball rad max</name>
-        <value>35.000000</value>
+        <value>17.170000</value>
     </SliderFloat_ball_rad_max>
     <SliderInt_ball_life_min>
         <name>ball life min</name>
@@ -63,14 +63,14 @@
     </SliderInt_ball_life_max>
     <Toggle_draw_colours>
         <name>draw colours</name>
-        <value>0</value>
+        <value>1</value>
     </Toggle_draw_colours>
     <Toggle_draw_images>
         <name>draw images</name>
-        <value>1</value>
+        <value>0</value>
     </Toggle_draw_images>
     <Toggle_draw_circles>
         <name>draw circles</name>
-        <value>0</value>
+        <value>1</value>
     </Toggle_draw_circles>
 </controls>

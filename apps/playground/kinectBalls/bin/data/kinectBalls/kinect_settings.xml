@@ -1,11 +1,11 @@
 <controls>
     <SliderFloat_angle>
         <name>angle</name>
-        <value>10.529999</value>
+        <value>14.849998</value>
     </SliderFloat_angle>
     <SliderInt_near_threshold>
         <name>near threshold</name>
-        <value>132</value>
+        <value>0</value>
     </SliderInt_near_threshold>
     <SliderInt_far_threshold>
         <name>far threshold</name>
